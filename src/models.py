@@ -9,16 +9,16 @@ from eralchemy import render_er
 Base = declarative_base()
 
 class Person(Base):
-    __tablename__ = 'person'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
+    __tablename__ = 'Person'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    user_name = Column(String(250), nullable=False)
+    nickname = Column(String(250), nullable=False)
+    website = Column(String(250), nullable=False)
+    biography = Column(String(500), nullable=False)
 
 class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+    __tablename__ = 'Address'
     id = Column(Integer, primary_key=True)
     street_name = Column(String(250))
     street_number = Column(String(250))
@@ -26,9 +26,28 @@ class Address(Base):
     person_id = Column(Integer, ForeignKey('person.id'))
     person = relationship(Person)
 
+
+class Post(Base):
+    __tablename__ = 'Post'
+    id = Column(Integer, primary_key=True)
+    location = Column(String(250), nullable=False)
+    image = Column(String(250), nullable=False)
+    likes = Column(String(250), nullable=False)
+    comments = Column(String(250), nullable=False)
+    message = Column(String(500), nullable=False)
+    favorite = Column(String(250), nullable=False)
+    person = relationship(Person)
+
+class Search(Base):
+    __tablename__ = 'Search'
+    id = Column(Integer, primary_key=True)
+    profile = Column(String(250), nullable=False)
+    favorite = Column(String(250), nullable=False)
+    search_bar = Column(String(250), nullable=False)
+    person = relationship(Person)
+
     def to_dict(self):
         return {}
-
 ## Draw from SQLAlchemy base
 try:
     result = render_er(Base, 'diagram.png')
